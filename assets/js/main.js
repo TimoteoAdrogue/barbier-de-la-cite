@@ -1,8 +1,9 @@
 /* Barbier de la Cité (site de demonstration).
-   Meme moteur que La Maison du Carac : aucun ecouteur de scroll, les
-   apparitions passent par IntersectionObserver, et les effets lies au
-   defilement tournent dans une seule boucle rAF, ouverte uniquement pendant
-   que l element concerne est a l ecran.                                      */
+   Meme moteur que La Maison du Carac : les apparitions passent par
+   IntersectionObserver, et les effets lies au defilement tournent dans une
+   seule boucle rAF, ouverte uniquement pendant que l element concerne est a
+   l ecran. Seul exception : le fil (section 9), toujours visible, suit un
+   ecouteur de scroll passif qui demande une image au plus par frame.         */
 (function () {
   'use strict';
 
@@ -186,6 +187,46 @@
     note.addEventListener('click', function (e) {
       if (e.target === note) note.close();
     });
+  }
+
+  /* -- 9. le fil : les ciseaux descendent au rythme de la lecture --------- */
+
+  var fil = document.querySelector('.fil');
+  if (fil) {
+    var lameA = fil.querySelector('.lame--a');
+    var lameB = fil.querySelector('.lame--b');
+    var COUPS = 18;          // nombre de coups de ciseaux sur toute la page
+    var dernier = -1;
+    var demande = false;
+
+    var majFil = function () {
+      demande = false;
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      var p = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      if (p === dernier) return;
+      dernier = p;
+      fil.style.setProperty('--p', p.toFixed(4));
+
+      // couleur d apres le fond sous les ciseaux ; le fil est en
+      // pointer-events: none, elementFromPoint voit donc ce qu il y a dessous
+      var r = fil.getBoundingClientRect();
+      var dessous = document.elementFromPoint(r.left + r.width / 2, r.top + p * r.height);
+      var zone = dessous && dessous.closest('[data-fond]');
+      if (zone) fil.setAttribute('data-fond', zone.getAttribute('data-fond'));
+
+      if (reduit) return;    // position seulement, les lames restent fixes
+      var a = 3 + 13 * (0.5 - 0.5 * Math.cos(p * Math.PI * 2 * COUPS));
+      lameA.setAttribute('transform', 'rotate(' + (-a).toFixed(2) + ' 12 18)');
+      lameB.setAttribute('transform', 'rotate(' + a.toFixed(2) + ' 12 18)');
+    };
+
+    window.addEventListener('scroll', function () {
+      if (!demande) { demande = true; requestAnimationFrame(majFil); }
+    }, { passive: true });
+    // la hauteur de page change quand le travelling s epingle ou au redimensionnement
+    window.addEventListener('resize', function () { dernier = -1; majFil(); });
+    majFil();
+
   }
 
   // auto-verification des horaires, en console seulement : ?test

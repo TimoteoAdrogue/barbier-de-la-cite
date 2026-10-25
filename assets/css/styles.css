@@ -634,6 +634,60 @@ figure{ margin: 0; }
 
 @media (max-width: 700px){ .pied__tel{ margin-inline-start: 0; } }
 
+/* ---------------------------------------------- le fil, indicateur de lecture -- */
+/* Un pointille « a decouper » le long du bord droit. Les ciseaux descendent
+   avec la lecture (--p, de 0 a 1, pose par main.js) ; derriere eux le trait
+   est plein. Les couleurs suivent le fond qui passe sous les ciseaux.       */
+
+.fil{
+  --p: 0;
+  --trait: rgba(23, 20, 15, .3);
+  --coupe: var(--accent);
+  position: fixed; z-index: 20;
+  top: calc(var(--nav-h) + 22px); bottom: 26px;
+  right: clamp(6px, 1.3vw, 22px);
+  width: 34px;
+  pointer-events: none;
+  color: var(--ink);
+  transition: color .4s var(--ease);
+}
+.fil[data-fond="sombre"]{ --trait: rgba(246, 243, 238, .34); --coupe: #F6F3EE; color: #F6F3EE; }
+.fil[data-fond="rouge"]{  --trait: rgba(255, 247, 242, .42); --coupe: #FFF7F2; color: #FFF7F2; }
+
+.fil__trait, .fil__coupe{
+  position: absolute; left: 50%; top: 0;
+  width: 2px; margin-left: -1px;
+  height: 100%;
+}
+.fil__trait{
+  background: repeating-linear-gradient(to bottom, var(--trait) 0 5px, transparent 5px 11px);
+}
+.fil__coupe{
+  background: var(--coupe);
+  transform-origin: top;
+  transform: scaleY(var(--p));
+  transition: background-color .4s var(--ease);
+}
+
+.ciseaux{
+  position: absolute; left: 50%;
+  top: calc(var(--p) * 100%);
+  width: 34px; height: 62.33px;   /* viewBox 24 x 44, a l echelle 34/24 */
+  overflow: visible;
+  /* le pivot (12, 18) de la viewBox se pose sur l avancee du trait */
+  transform: translate(-17px, -25.5px);
+  filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, .35));
+}
+.lame__bras{ fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+.lame__anneau{ fill: none; stroke: currentColor; stroke-width: 2; }
+.lame__acier{ fill: #D3D7DC; stroke: #2A2D32; stroke-width: .6; stroke-linejoin: round; }
+.ciseaux__vis{ fill: #2A2D32; stroke: #D3D7DC; stroke-width: .5; }
+
+@media (max-width: 600px){
+  .fil{ width: 24px; right: 2px; bottom: 54px; }
+  .ciseaux{ width: 24px; height: 44px; transform: translate(-12px, -18px); }
+}
+
 /* ------------------------------------------------------- note de demo -- */
 
 /* petite etiquette en coin : on peut la lire, elle ne prend pas la vedette */

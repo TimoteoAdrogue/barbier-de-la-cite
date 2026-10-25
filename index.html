@@ -53,7 +53,7 @@
 <main id="contenu">
 
   <!-- HERO : photo plein cadre, texte en bas a gauche, parallaxe au defilement -->
-  <section class="hero">
+  <section class="hero" data-fond="sombre">
     <div class="hero__media">
       <img src="assets/img/hero.jpg" width="1584" height="672" fetchpriority="high"
            alt="Fauteuil de barbier en cuir dans un salon aux murs de brique, à la tombée du jour.">
@@ -83,7 +83,7 @@
   </section>
 
   <!-- TARIFS : aplat rouge, tableau de prix facon ardoise de barbier -->
-  <section class="tarifs" id="tarifs">
+  <section class="tarifs" id="tarifs" data-fond="rouge">
     <div class="poteau" aria-hidden="true"></div>
     <div class="wrap tarifs__grid">
       <div class="tarifs__intro">
@@ -104,7 +104,7 @@
   </section>
 
   <!-- LES COUPES : travelling horizontal epingle, carrousel tactile en repli -->
-  <section class="pan" id="coupes">
+  <section class="pan" id="coupes" data-fond="clair">
     <div class="pan__stage">
       <header class="pan__head wrap">
         <h2 class="display h-sec" data-reveal>Ce qu'on nous demande le plus.</h2>
@@ -121,7 +121,7 @@
             </div>
           </li>
 
-          <li class="carte carte--mot">
+          <li class="carte carte--mot" data-fond="rouge">
             <div class="carte__txt">
               <h3>Sans rendez-vous, du mardi au samedi.</h3>
               <p>Ou réservez votre créneau en ligne, en deux clics.</p>
@@ -138,7 +138,7 @@
             </div>
           </li>
 
-          <li class="carte carte--mot carte--nuit">
+          <li class="carte carte--mot carte--nuit" data-fond="sombre">
             <div class="carte__txt">
               <p class="carte__kicker">20 min · 30.–</p>
               <h3>La barbe, tracée au rasoir.</h3>
@@ -159,7 +159,7 @@
   </section>
 
   <!-- AVIS : une grande citation, une seconde en appui -->
-  <section class="avis" id="avis">
+  <section class="avis" id="avis" data-fond="clair">
     <div class="wrap avis__wrap">
       <p class="note" data-reveal>
         <svg class="ico ico--star" aria-hidden="true"><use href="#i-star"></use></svg>
@@ -179,7 +179,7 @@
   </section>
 
   <!-- NOUS TROUVER : aplat bleu nuit, panneau d'informations -->
-  <section class="lieu" id="nous-trouver">
+  <section class="lieu" id="nous-trouver" data-fond="sombre">
 
     <div class="wrap lieu__wrap">
       <p class="display lieu__enseigne" data-reveal>Au pied de la cathédrale.<span>La Cité, Lausanne</span></p>
@@ -234,7 +234,7 @@
 
 </main>
 
-<footer class="pied">
+<footer class="pied" data-fond="clair">
   <div class="poteau" aria-hidden="true"></div>
   <div class="wrap">
     <div class="pied__inner">
@@ -252,6 +252,25 @@
     </p>
   </div>
 </footer>
+
+<!-- Le fil : des ciseaux descendent un pointille au rythme de la lecture -->
+<div class="fil" data-fond="sombre" aria-hidden="true">
+  <span class="fil__trait"></span>
+  <span class="fil__coupe"></span>
+  <svg class="ciseaux" viewBox="0 0 24 44">
+    <g class="lame lame--a" transform="rotate(-7 12 18)">
+      <path class="lame__bras" d="M12 18 L9.6 10.2"/>
+      <circle class="lame__anneau" cx="8.6" cy="6.8" r="3.7"/>
+      <path class="lame__acier" d="M12 16.6 L13.9 22 L12.35 42.6 L11.3 22 Z"/>
+    </g>
+    <g class="lame lame--b" transform="rotate(7 12 18)">
+      <path class="lame__bras" d="M12 18 L14.4 10.2"/>
+      <circle class="lame__anneau" cx="15.4" cy="6.8" r="3.7"/>
+      <path class="lame__acier" d="M12 16.6 L12.7 22 L11.65 42.6 L10.1 22 Z"/>
+    </g>
+    <circle class="ciseaux__vis" cx="12" cy="18" r="1.15"/>
+  </svg>
+</div>
 
 <!-- Demo : la reservation ouvre cette note au lieu d'un agenda reel -->
 <button class="demo" type="button" data-reserver>Site de démonstration</button>

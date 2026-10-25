@@ -39,4 +39,10 @@ OFL 1.1). Aucun écouteur de `scroll` : `IntersectionObserver` et une seule bouc
 `requestAnimationFrame` (parallaxe du hero, rayures du poteau, travelling des coupes).
 Sans JS tout reste lisible ; sous `prefers-reduced-motion`, rien ne bouge.
 
+**Le fil** (indicateur de lecture) : des ciseaux descendent un pointillé « à découper »
+le long du bord droit, le trait devient plein derrière eux et les lames s'ouvrent et se
+ferment avec le défilement. Leur couleur suit le fond qui passe dessous (attribut
+`data-fond` sur les sections et les cartes colorées). C'est le seul écouteur de `scroll`,
+passif, limité à une mise à jour par image.
+
 Test des horaires : ouvrir la page avec `?test`, le résultat s'affiche en console.
