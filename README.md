@@ -1,48 +1,70 @@
 # Barbier de la Cité (site de démonstration)
 
-Site vitrine d'une page pour un barbier **fictif** de Lausanne. Il sert d'exemple à
-envoyer aux barbiers de la ville : on remplace le nom, les tarifs, les horaires et les
-photos par les leurs.
+Site vitrine d'une page pour un barbier **fictif** de Lausanne, envoyé aux barbiers de la
+ville comme exemple de ce que leur site pourrait être.
 
 En ligne : <https://timoteoadrogue.github.io/barbier-de-la-cite/> (`noindex, nofollow`).
 Un `git push` sur `main` republie.
 
 ## Ce qui est fictif
 
-Le salon, l'adresse (numéro inventé dans une vraie rue), le téléphone `021 000 00 00`,
-les tarifs, les avis et la note. Le pied de page et l'étiquette « Site de démonstration »
-le disent. Les boutons « Réserver » ouvrent une note qui explique qu'ici s'ouvrirait
-l'agenda du salon (Planity, Fresha, Salonkee…).
+Le salon, l'équipe (Luca, Samir, Noah), l'histoire, les tarifs, les avis et la note.
+L'adresse est un numéro inventé dans une vraie rue. Aucun numéro de téléphone n'est
+affiché : le bouton « Appeler le salon » et la confirmation de réservation ouvrent une note
+qui explique ce que ferait le vrai bouton. Le pied de page le dit aussi.
 
-**Photos générées par IA, réduites au minimum** : `hero.jpg` (fauteuil vide),
-`skinfade.jpg` (de dos), `taper.jpg` (de profil). Aucun visage de face. Les autres
-cartes et la section « Nous trouver » sont typographiques, sans photo.
+## Photos
+
+Vraies photos, licence Unsplash (usage commercial libre, sans attribution obligatoire).
+Les portraits de l'équipe sont passés en noir et blanc pour former une série. Pour un vrai
+salon, il faut les remplacer par ses propres photos.
+
+| Fichier | Source |
+|---|---|
+| `hero.jpg` | <https://unsplash.com/photos/a-man-getting-his-hair-cut-in-a-barber-shop-C4FeJ_3fmdo> |
+| `coupe-court.jpg` | <https://unsplash.com/photos/a-man-getting-his-hair-cut-by-a-barber-xO8OpsasyZA> |
+| `coupe-degrade.jpg` | <https://unsplash.com/photos/man-in-red-and-white-shirt-holding-black-smartphone-yG0Z9OwXWks> |
+| `coupe-nuque.jpg` | <https://unsplash.com/photos/man-in-white-dress-shirt-holding-black-dslr-camera-m21YynrKdsw> |
+| `serviette.jpg` | <https://unsplash.com/photos/a-man-getting-his-hair-cut-by-a-barber-Nh-A851W2ro> |
+| `mousse.jpg` | <https://unsplash.com/photos/grayscale-photo-of-man-shaving-his-beard-Twd3yaqA2NM> |
+| `salon.jpg` | <https://unsplash.com/photos/vintage-barber-chair-bathed-in-sunlight-near-doorway-4y50IXfnaIo> |
+| `equipe-luca.jpg` | <https://unsplash.com/photos/shallow-focus-photo-of-man-holding-scissors-taZSJ6xmt48> |
+| `equipe-samir.jpg` | <https://unsplash.com/photos/man-in-black-crew-neck-t-shirt-holding-white-bottle-T_gTN3Po9RQ> |
+| `equipe-noah.jpg` | <https://unsplash.com/photos/man-in-black-nike-fitted-cap-holding-black-smartphone-bmIJtELt3Ck> |
+
+## Ce que fait la page
+
+- **Barre épinglée** : statut ouvert ou fermé calculé à l'heure de Lausanne
+  (`Europe/Zurich`), quelle que soit l'heure du visiteur, mis à jour chaque minute.
+  La rubrique en cours de lecture est soulignée.
+- **Réservation en ligne** : prestation, barbier (avec photo), 6 prochains jours
+  d'ouverture, créneaux de 30 minutes. L'agenda est simulé (créneaux pris stables d'une
+  visite à l'autre). Cliquer un tarif ou « Réserver avec Luca » pré-remplit le formulaire.
+- **Coupes récentes** : travelling horizontal épinglé sur grand écran, carrousel sur mobile.
+- **Le fil** : des ciseaux descendent un pointillé le long du bord droit au rythme de la
+  lecture, et changent de couleur selon le fond qui passe dessous.
+- Thème clair et sombre (`prefers-color-scheme`), tout est immobile sous
+  `prefers-reduced-motion`, et lisible sans JavaScript.
 
 ## Adapter pour un vrai salon
 
 | Quoi | Où |
 |---|---|
-| Nom, adresse, téléphone | `index.html` (nav, hero, « Nous trouver », pied) |
-| Tarifs | `index.html`, liste `.ardoise` |
-| Horaires | tableau `.horaires` **et** objet `HORAIRES` dans `assets/js/main.js` |
-| Bouton « Réserver » | remplacer `data-reserver` + `href` par le lien d'agenda, supprimer `.demo` et `#note-demo` |
-| Couleur | `--accent` dans `assets/css/styles.css` |
-| Photos | `assets/img/` (hero 16:9, deux coupes en portrait ou carré) |
+| Nom, adresse | `index.html` (barre, infos, pied) |
+| Tarifs | `index.html` (`.carte-prix` **et** les `<option>` du formulaire) et `SERVICES` dans `main.js` |
+| Horaires | tableau `.horaires`, pied de page **et** `HORAIRES` dans `main.js` |
+| Équipe | `.equipe__liste`, puces `barbier` du formulaire, `BARBIERS` dans `main.js` |
+| Réservation | remplacer le formulaire par l'intégration de l'agenda du salon (Planity, Fresha, Salonkee) |
+| Téléphone | remplacer `data-demo="appel"` par `href="tel:+41..."` |
+| Couleur | `--vert` dans `styles.css` |
 
-Retirer `noindex` et la mention de démo seulement une fois le site validé par le salon.
+Retirer `noindex` et la mention de démonstration seulement avec l'accord du salon.
 
 ## Structure
 
-Même moteur que La Maison du Carac : HTML/CSS/JS natifs, aucune dépendance, polices
-auto-hébergées (Bricolage Grotesque, axe de chasse utilisé à 75 %, et Instrument Sans,
-OFL 1.1). Aucun écouteur de `scroll` : `IntersectionObserver` et une seule boucle
-`requestAnimationFrame` (parallaxe du hero, rayures du poteau, travelling des coupes).
-Sans JS tout reste lisible ; sous `prefers-reduced-motion`, rien ne bouge.
+HTML, CSS et JS natifs, sans dépendance ni compilation. Police Archivo auto-hébergée
+(OFL 1.1), chasse étendue pour l'enseigne et les titres. Icônes Phosphor et Simple Icons
+dans un sprite en tête de page. Carte OpenStreetMap.
 
-**Le fil** (indicateur de lecture) : des ciseaux descendent un pointillé « à découper »
-le long du bord droit, le trait devient plein derrière eux et les lames s'ouvrent et se
-ferment avec le défilement. Leur couleur suit le fond qui passe dessous (attribut
-`data-fond` sur les sections et les cartes colorées). C'est le seul écouteur de `scroll`,
-passif, limité à une mise à jour par image.
-
-Test des horaires : ouvrir la page avec `?test`, le résultat s'affiche en console.
+Tests : ouvrir la page avec `?test`, le résultat s'affiche en console (statut d'ouverture,
+créneaux qui ne débordent pas de la fermeture ni ne tombent dans le passé).
