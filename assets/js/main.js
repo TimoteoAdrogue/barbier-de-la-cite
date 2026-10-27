@@ -347,6 +347,24 @@
     majHeures();
   }
 
+  // hero : prochain creneau libre, tous barbiers confondus, pour une coupe
+  var prochain = document.querySelector('[data-prochain]');
+  if (prochain) {
+    var maintenantDispo = heureLausanne(new Date());
+    var trouve = null;
+    joursOuverts(maintenantDispo).some(function (j) {
+      var c = creneaux(j, 30, 'tous', maintenantDispo).filter(function (x) { return x.libre; })[0];
+      if (c) trouve = { jour: j, creneau: c };
+      return !!c;
+    });
+    if (trouve) {
+      var quand = trouve.jour.ecart === 0 ? 'aujourd\'hui' : trouve.jour.ecart === 1 ? 'demain' : JOURS[trouve.jour.jour];
+      prochain.textContent = 'Prochain créneau libre : ' + quand + ' à ' + hhmm(trouve.creneau.minutes) +
+        ' avec ' + BARBIERS[trouve.creneau.barbier] + '.';
+      prochain.hidden = false;
+    }
+  }
+
   /* -- 8. le fil : les ciseaux descendent au rythme de la lecture --------- */
 
   var fil = document.querySelector('.fil');
